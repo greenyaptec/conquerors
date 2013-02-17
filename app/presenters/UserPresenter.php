@@ -1,5 +1,8 @@
 <?php
 
+use \Conquerors\RegisterException,
+	\Nette\Security\AuthenticationException;
+
 class UserPresenter extends BasePresenter
 {
 	/** @var Users */
@@ -43,7 +46,9 @@ class UserPresenter extends BasePresenter
 
 	public function createComponentRegisterForm()
 	{
-		//
+		$form = new RegisterForm();
+		$form->onSuccess[] = $this->registerFormSubmitted;
+		return $form;
 	}
 
 	public function registerFormSubmitted($form)
@@ -53,23 +58,40 @@ class UserPresenter extends BasePresenter
 		{
 			$this->users->register($v);
 			$this->user->login($v->nick, $v->password);
-			$this->flashMessage("Registration completed succesfully, login sucessfull.");
+			$this->flashMessage("Registration completed succesfully, automatically logged in.");
 
 		}
 		catch(RegisterException $e)
 		{
 			$this->flashMessage($e->getMessage(), 'error');
-			$this->redirect('this');
+			$this->refresh();
 		}
 	}
 
 	public function createComponentLoginForm()
 	{
-		//
+		$form = new LoginForm();
+		$form->onSuccess[] = $this->loginFormSubmitted;
+		return $form;
 	}
 
 	public function loginFormSubmitted($form)
 	{
 		$v = $form->values;
+		try
+		{
+			$this->user->login($v->nick, $v->password);
+			if($v->stay_logged_in)
+			{
+				$this->user->setExpiration('+14 days');
+			}
+			$this->flashMessage('Login successfull.');
+			$this->redirect("User:default");
+		}
+		catch(AuthenticationException $e)
+		{
+			$this->flashMessage($e->getMessage(), 'error');
+			$this->refresh();
+		}
 	}
 }

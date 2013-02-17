@@ -1,3 +1,4 @@
+{default $adminMenu = array()}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,14 +7,14 @@
 	<meta name="robots" content="{$robots}" n:ifset="$robots">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-	<title>{#title|striptags}   TITLE   {/#}</title>
+	<title>{#title|striptags}Conquerors - Online game{/#}</title>
 
 	<link href="{$basePath}/css/bootstrap.css" rel="stylesheet">
 	<link href="{$basePath}/css/bootstrap-responsive.css" rel="stylesheet">
 	<link href="{$basePath}/css/common.css" rel="stylesheet">
-	
+
 	<!-- <link rel="shortcut icon" href="{$basePath}/favicon.ico"> -->
-	
+
 	{#head}{/#}
 </head>
 
@@ -23,16 +24,22 @@
 	<div class="navbar navbar-fixed-top navbar-inverse">
 		<div class="navbar-inner">
 			<div class="container">
-				<a class="brand" n:href="Homepage:default">   Project   </a>
+				<a class="brand" n:href="Homepage:default">Conquerors</a>
 				<ul class="nav">
 					<li class="divider-vertical"></li>
-					<!-- left menu items -->
+					<li{ifCurrent Servers:*} class="active"{/ifCurrent}><a n:href="Servers:default">Servers</a></li>
 					<li class="divider-vertical"></li>
 				</ul>
 
 				<ul class="nav pull-right">
 					<li class="divider-vertical"></li>
-					<!-- right menu items -->
+					{if $user->loggedIn}
+						<li{ifCurrent User:default} class="active"{/ifCurrent}><a n:href="User:default">Logged in as {$user->identity->nick}</a></li>
+						<li><a n:href="logout!">Logout</a></li>
+					{else}
+						<li{ifCurrent User:login} class="active"{/ifCurrent}><a n:href="User:login">Login</a></li>
+						<li{ifCurrent User:register} class="active"{/ifCurrent}><a n:href="User:register">Register</a></li>
+					{/if}
 					<li class="divider-vertical"></li>
 				</ul>
 			</div>
@@ -46,15 +53,27 @@
 				<a class="close" data-dismiss="alert" href="#">&times;</a>
 			</div>
 
+			{if count($adminMenu)}
+				<div class="btn-group">
+					<a class="btn-dropdown-toggle" data-toggle="dropdown" href="#">Admin <span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						{foreach $adminMenu as $menuItem}
+							<li><a n:href="$menuItem['href']">{$menuItem['text']}</a></li>
+						{/foreach}
+					</ul>
+				</div>
+			{/if}
+
 			{#content}
 			Content has not been added yet.
 			{/#}
 		</div>
 	</div>
-	
+
 	{#scripts}
 		<script src="{$basePath}/js/jquery.js"></script>
 		<script src="{$basePath}/js/netteForms.js"></script>
+		<script src="{$basePath}/js/bootstrap.js"></script>
 		<script src="{$basePath}/js/common.js"></script>
 	{/#}
 </body>

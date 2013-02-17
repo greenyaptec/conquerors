@@ -39,6 +39,7 @@ class Users extends Table
 			'password' => Authenticator::passwordHash($data->password, $salt),
 			'email' => $data->email,
 			'salt' => $salt,
+			'role' => 'member',
 			'registered' => Time(),
 			'last_login' => Time()
 		));

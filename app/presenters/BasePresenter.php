@@ -12,6 +12,11 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 		$this->redirect("Homepage:default");
 	}
 
+	public function refresh()
+	{
+		$this->redirect('this');
+	}
+
 	/**
 	 * Saves the message to template, that can be displayed after redirect.
 	 * @param  string
