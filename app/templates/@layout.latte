@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="description" content="My Sandbox">
+	<meta name="robots" content="{$robots}" n:ifset="$robots">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<title>{#title|striptags}   TITLE   {/#}</title>
+
+	<link href="{$basePath}/css/bootstrap.css" rel="stylesheet">
+	<link href="{$basePath}/css/bootstrap-responsive.css" rel="stylesheet">
+	<link href="{$basePath}/css/common.css" rel="stylesheet">
+	
+	<!-- <link rel="shortcut icon" href="{$basePath}/favicon.ico"> -->
+	
+	{#head}{/#}
+</head>
+
+<body style="margin: 45px;">
+	<script> document.body.className+=' js' </script>
+
+	<div class="navbar navbar-fixed-top navbar-inverse">
+		<div class="navbar-inner">
+			<div class="container">
+				<a class="brand" n:href="Homepage:default">   Project   </a>
+				<ul class="nav">
+					<li class="divider-vertical"></li>
+					<!-- left menu items -->
+					<li class="divider-vertical"></li>
+				</ul>
+
+				<ul class="nav pull-right">
+					<li class="divider-vertical"></li>
+					<!-- right menu items -->
+					<li class="divider-vertical"></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<div class="container-fluid">
+		<div class="container">
+			<div n:foreach="$flashes as $flash" class="fade in alert alert-{$flash->type}{if strlen($flash->message > 100)} alert-block{/if}">
+				{$flash->message}
+				<a class="close" data-dismiss="alert" href="#">&times;</a>
+			</div>
+
+			{#content}
+			Content has not been added yet.
+			{/#}
+		</div>
+	</div>
+	
+	{#scripts}
+		<script src="{$basePath}/js/jquery.js"></script>
+		<script src="{$basePath}/js/netteForms.js"></script>
+		<script src="{$basePath}/js/common.js"></script>
+	{/#}
+</body>
+</html>
