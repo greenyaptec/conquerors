@@ -10,7 +10,7 @@
  *
  * @author greeny
  */
-class ServersPresenter extends BasePresenter
+class ServersPresenter extends ProtectedPresenter
 {
 	/** @var \Servers */
 	protected $servers;
@@ -18,5 +18,10 @@ class ServersPresenter extends BasePresenter
 	public function inject(\Servers $servers)
 	{
 		$this->servers = $servers;
+	}
+
+	public function renderDefault()
+	{
+		$this->template->servers = $this->servers->findAll()->where('playable', 1)->order('created DESC');
 	}
 }

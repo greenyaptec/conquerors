@@ -17,6 +17,24 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 		$this->redirect('this');
 	}
 
+	public function beforeRender()
+	{
+		parent::beforeRender();
+		TemplateUpgrader::upgrade($this->template);
+	}
+
+	public function formatTemplateFiles()
+	{
+		$name = $this->getName();
+		$presenter = substr($name, strrpos(':' . $name, ':'));
+		return array(
+			TEMPLATE_DIR."/$presenter/$this->view.latte",
+			TEMPLATE_DIR."/$presenter.$this->view.latte",
+			TEMPLATE_DIR."/$presenter/$this->view.phtml",
+			TEMPLATE_DIR."/$presenter.$this->view.phtml",
+		);
+	}
+
 	/**
 	 * Saves the message to template, that can be displayed after redirect.
 	 * @param  string

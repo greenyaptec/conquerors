@@ -53,17 +53,6 @@
 				<a class="close" data-dismiss="alert" href="#">&times;</a>
 			</div>
 
-			{if count($adminMenu)}
-				<div class="btn-group">
-					<a class="btn-dropdown-toggle" data-toggle="dropdown" href="#">Admin <span class="caret"></span></a>
-					<ul class="dropdown-menu">
-						{foreach $adminMenu as $menuItem}
-							<li><a n:href="$menuItem['href']">{$menuItem['text']}</a></li>
-						{/foreach}
-					</ul>
-				</div>
-			{/if}
-
 			{#content}
 			Content has not been added yet.
 			{/#}

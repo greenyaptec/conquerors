@@ -1,1 +1,6 @@
-/* basic css */
+.not-found
+{
+	text-align: center;
+	font-style: italic;
+	font-weight: bold;
+}

@@ -5,6 +5,8 @@
  * and open the template in the editor.
  */
 
+use Fabik\Database\Table;
+
 /**
  *
  *
